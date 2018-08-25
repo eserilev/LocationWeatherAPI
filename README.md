@@ -11,22 +11,30 @@ will throw exception if zipcode already exists in db (zipcode column has a uniqu
 </ul>
 
 Delete Location:
+
 <b>DELETE</b> /api/location?Zipcode=90505&Name=My House&Country=United States of America&State=California&Id=6
 <ul><li>uses ID field to delete</li>
 </ul>
+
 Get Location:
-GET /api/location?Id=6
+
+<b>GET</b> /api/location?Id=6
 
 Get Weather:
-GET /api/weather?Zipcode=90505&Name=My House&Country=United States of America&State=California&Id=6
-OpenWeather 3rd party api provides weather data
-uses zipcode to get weather
-weather data is stored in a redis cache on azure with the zipcode as the key. 
-if the same zipcode is requested within a 5 minute period weather data from the cache is returned and no api request is made to OpenWeather
 
-Some other notes:
-Endpoints are asynchronous
-Used Simple Injector library to help with dependancy injection
+<b>GET</b> /api/weather?Zipcode=90505&Name=My House&Country=United States of America&State=California&Id=6
+
+<ul>
+  <li>OpenWeather 3rd party api provides weather data</li>
+<li>uses zipcode to get weather</li>
+  <li>weather data is stored in a redis cache on azure with the zipcode as the key.</li>
+<li>if the same zipcode is requested within a 5 minute period weather data from the cache is returned and no api request is made to OpenWeather</li>
+</ul>
+<b>Some other notes:</b>
+<ul>
+  <li>Endpoints are asynchronous</li>
+  <li>Used Simple Injector library to help with dependancy injection</li>
+  </ul>
 
 
 
