@@ -4,12 +4,14 @@ using System.Linq;
 using System.Web;
 using WincChallenge.Models;
 using WincChallenge.DAL;
+using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace WincChallenge.Respository
 {
     public class LocationRepository : IRepository<LocationModel>
     {
-        public void Create(ref LocationModel entity)
+        public async Task Create(LocationModel entity)
         {
             using (var db = new WincChallengeDbEntities())
             {
@@ -21,27 +23,27 @@ namespace WincChallenge.Respository
                     Zipcode = entity.Zipcode
                 };
                 db.Locations.Add(l);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 entity.Id = l.Id;
             }
         }
 
-        public void Delete(LocationModel entity)
+        public async Task Delete(LocationModel entity)
         {
             using (var db = new WincChallengeDbEntities())
             {
-                var l = db.Locations.Where(x => x.Id == entity.Id).SingleOrDefault();
+                var l = await db.Locations.Where(x => x.Id == entity.Id).SingleOrDefaultAsync();
                 db.Locations.Remove(l);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
 
-        public LocationModel GetById(int id)
+        public async Task<LocationModel> GetById(int id)
         {
             using (var db = new WincChallengeDbEntities())
             {
-                var l = db.Locations.Where(x => x.Id == id).SingleOrDefault();
+                var l = await db.Locations.Where(x => x.Id == id).SingleOrDefaultAsync();
                 if (l == null) return null;
                 return new LocationModel
                 {
@@ -52,6 +54,11 @@ namespace WincChallenge.Respository
                     Zipcode = l.Zipcode
                 };
             }
+        }
+        
+        public WeatherModel GetWeather(LocationModel entity)
+        {
+            return new WeatherModel();
         }
     }
 }

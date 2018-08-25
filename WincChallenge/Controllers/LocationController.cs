@@ -20,12 +20,12 @@ namespace WincChallenge.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult FetchLocation([FromUri]Int32 Id)
+        public async Task<IHttpActionResult> FetchLocation([FromUri]Int32 Id)
         {
             LocationModel location;
             try
             {
-                location = repository.GetById(Id);
+                location = await repository.GetById(Id);
             }
             catch (Exception ex)
             {
@@ -35,11 +35,11 @@ namespace WincChallenge.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult CreateLocation([FromBody]LocationModel location)
+        public async Task<IHttpActionResult> CreateLocation([FromBody]LocationModel location)
         {
             try
             {
-                repository.Create(ref location);
+                await repository.Create(location);
             }
             catch (Exception ex)
             {
@@ -50,11 +50,11 @@ namespace WincChallenge.Controllers
         }
 
         [HttpDelete]
-        public IHttpActionResult DeleteLocation([FromUri]LocationModel location)
+        public async Task<IHttpActionResult> DeleteLocation([FromUri]LocationModel location)
         {
             try
             {
-                repository.Delete(location);
+                await repository.Delete(location);
             }
             catch (Exception ex)
             {
@@ -62,6 +62,22 @@ namespace WincChallenge.Controllers
                 return BadRequest(ex.Message);
             }
             return Ok(location);
+        }
+
+        [HttpGet]
+        [Route("weather")]
+        public IHttpActionResult FetchWeather([FromUri] LocationModel location)
+        {
+            WeatherModel w;
+            try
+            {
+                w = repository.GetWeather(location);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return Ok(w);
         }
     }
 }
