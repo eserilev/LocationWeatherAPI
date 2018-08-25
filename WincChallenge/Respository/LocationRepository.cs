@@ -61,11 +61,28 @@ namespace WincChallenge.Respository
         public async Task<WeatherModel> GetWeather(LocationModel entity)
         {
             WeatherModel w;
+            WeatherForecast f;
+            CurrentWeather c;   
+            using (var cacheConnection = CacheManager.Connection)
             using (var http = new HttpClient())
             {
-                w = await (await http.GetAsync(@"http://api.openweathermap.org/data/2.5/weather?zip=" +
-                    entity.Zipcode + ",us&APPID=" + Properties.Settings.Default.OpenWeatherApiKey)).Content.ReadAsAsync<WeatherModel>();
-                //w = JsonConvert.DeserializeObject<WeatherModel>(jsonResponse.ToString());
+
+                 f = await (await http.GetAsync(@"http://api.openweathermap.org/data/2.5/forecast?zip=" +
+                    entity.Zipcode + ",us&APPID=" + Properties.Settings.Default.OpenWeatherApiKey)).Content.ReadAsAsync<WeatherForecast>();
+
+                c = await (await http.GetAsync(@"http://api.openweathermap.org/data/2.5/weather?zip=" +
+                    entity.Zipcode + ",us&APPID=" + Properties.Settings.Default.OpenWeatherApiKey)).Content.ReadAsAsync<CurrentWeather>();
+
+                w = new WeatherModel
+                {
+                    currentWeather = c,
+                    threeHourForecast = f.list,
+                    name = c.name,
+                    Id = c.Id
+                };
+                var cache = cacheConnection.GetDatabase();
+                JsonConvert.DeserializeObject<WeatherModel>(cache.StringGet(w.Id.ToString()));
+                cache.StringSet(w.Id.ToString(), JsonConvert.SerializeObject(w));
             }
             return w;
         }

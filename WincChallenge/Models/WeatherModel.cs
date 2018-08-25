@@ -6,15 +6,36 @@ using WincChallenge.Respository;
 
 namespace WincChallenge.Models
 {
-    public class WeatherModel: EntityBase
+    public class WeatherModel : EntityBase
     {
         public string name { get; set; }
+        public WeatherRecord[] threeHourForecast { get; set; }
+        public CurrentWeather currentWeather { get; set; }
+    }
 
-        public main main { get; set; }
+    public class WeatherForecast: EntityBase
+    {
+        public string name { get; set; }
+        public WeatherRecord[] list { get; set; }    
+    }
+
+    public class CurrentWeather : EntityBase
+    {
+        public string name { get; set; }
+        public TempInfo main { get; set; }
+        public WeatherDescription[] weather { get; set; }
 
     }
 
-    public class main
+
+    public class WeatherRecord
+    {
+        public TempInfo main { get; set; }
+        public WeatherDescription[] weather { get; set; }
+        public DateTime dt_txt { get; set; }
+    }
+
+    public class TempInfo
     {
         public double temp { get; set; }
         public double pressure { get; set; }
@@ -22,4 +43,11 @@ namespace WincChallenge.Models
         public double temp_min { get; set; }
         public double temp_max { get; set; }
     }
+
+    public class WeatherDescription
+    {
+        public string main { get; set; }
+        public string description { get; set; }
+    }
+
 }
