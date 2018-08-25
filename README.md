@@ -1,7 +1,8 @@
 # LocationWeatherAPI
 
 
-Create Location:\n
+Create Location:
+
 POST /api/location?Zipcode=90505&Name=My House&Country=United States of America&State=California&Id=6
 will throw exception if zipcode already exists in db (zipcode column has a unique constraint)
 
