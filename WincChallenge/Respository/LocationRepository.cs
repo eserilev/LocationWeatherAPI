@@ -6,6 +6,8 @@ using WincChallenge.Models;
 using WincChallenge.DAL;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace WincChallenge.Respository
 {
@@ -55,10 +57,17 @@ namespace WincChallenge.Respository
                 };
             }
         }
-        
-        public WeatherModel GetWeather(LocationModel entity)
+
+        public async Task<WeatherModel> GetWeather(LocationModel entity)
         {
-            return new WeatherModel();
+            WeatherModel w;
+            using (var http = new HttpClient())
+            {
+                w = await (await http.GetAsync(@"http://api.openweathermap.org/data/2.5/weather?zip=" +
+                    entity.Zipcode + ",us&APPID=" + Properties.Settings.Default.OpenWeatherApiKey)).Content.ReadAsAsync<WeatherModel>();
+                //w = JsonConvert.DeserializeObject<WeatherModel>(jsonResponse.ToString());
+            }
+            return w;
         }
     }
 }

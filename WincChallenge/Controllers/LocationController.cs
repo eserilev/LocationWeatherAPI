@@ -64,14 +64,14 @@ namespace WincChallenge.Controllers
             return Ok(location);
         }
 
+        [Route("api/weather")]
         [HttpGet]
-        [Route("weather")]
-        public IHttpActionResult FetchWeather([FromUri] LocationModel location)
+        public async Task<IHttpActionResult> FetchWeather([FromUri] LocationModel location)
         {
             WeatherModel w;
             try
             {
-                w = repository.GetWeather(location);
+                w = await repository.GetWeather(location);
             }
             catch (Exception ex)
             {
