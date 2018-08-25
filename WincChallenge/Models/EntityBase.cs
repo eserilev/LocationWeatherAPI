@@ -7,6 +7,6 @@ namespace WincChallenge.Respository
 {
     public abstract class EntityBase
     {
-        public Int32 Id { get; protected set; }
+        public Int32 Id { get; set; }
     }
 }

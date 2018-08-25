@@ -18,3 +18,8 @@ C:\Users\Eitan\source\repos\WincChallenge\WincChallenge\bin\System.Web.Http.WebH
 C:\Users\Eitan\source\repos\WincChallenge\WincChallenge\obj\Debug\WincChallenge.csproj.CoreCompileInputs.cache
 C:\Users\Eitan\source\repos\WincChallenge\WincChallenge\obj\Debug\WincChallenge.dll
 C:\Users\Eitan\source\repos\WincChallenge\WincChallenge\obj\Debug\WincChallenge.pdb
+C:\Users\Eitan\source\repos\WincChallenge\WincChallenge\bin\EntityFramework.dll
+C:\Users\Eitan\source\repos\WincChallenge\WincChallenge\bin\EntityFramework.SqlServer.dll
+C:\Users\Eitan\source\repos\WincChallenge\WincChallenge\bin\EntityFramework.xml
+C:\Users\Eitan\source\repos\WincChallenge\WincChallenge\bin\EntityFramework.SqlServer.xml
+C:\Users\Eitan\source\repos\WincChallenge\WincChallenge\obj\Debug\WincChallenge.csprojResolveAssemblyReference.cache

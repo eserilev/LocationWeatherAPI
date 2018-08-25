@@ -22,7 +22,7 @@ namespace WincChallenge.Controllers
         [HttpGet]
         public IHttpActionResult FetchLocation([FromUri]Int32 Id)
         {
-            Location location;
+            LocationModel location;
             try
             {
                 location = repository.GetById(Id);
@@ -35,7 +35,7 @@ namespace WincChallenge.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult CreateLocation([FromBody]Location location)
+        public IHttpActionResult CreateLocation([FromBody]LocationModel location)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace WincChallenge.Controllers
         }
 
         [HttpDelete]
-        public IHttpActionResult DeleteLocation([FromUri]Location location)
+        public IHttpActionResult DeleteLocation([FromUri]LocationModel location)
         {
             try
             {

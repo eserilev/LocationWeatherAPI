@@ -6,7 +6,7 @@ using WincChallenge.Respository;
 
 namespace WincChallenge.Models
 {
-    public class Location : EntityBase
+    public class LocationModel : EntityBase
     {
         public string Name { get; set; }
         public Int32 Zipcode { get; set; }
