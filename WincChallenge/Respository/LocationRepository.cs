@@ -35,8 +35,11 @@ namespace WincChallenge.Respository
             using (var db = new WincChallengeDbEntities())
             {
                 var l = await db.Locations.Where(x => x.Id == entity.Id).SingleOrDefaultAsync();
-                db.Locations.Remove(l);
-                await db.SaveChangesAsync();
+                if (l != null)
+                {
+                    db.Locations.Remove(l);
+                    await db.SaveChangesAsync();
+                }
             }
         }
 
@@ -66,12 +69,15 @@ namespace WincChallenge.Respository
             var cache = CacheManager.Connection.GetDatabase();
             using (var http = new HttpClient())
             {
-
-                var check = JsonConvert.DeserializeObject<WeatherModel>(await cache.StringGetAsync(entity.Zipcode.ToString()));
-                var minutes = DateTime.Now.ToUniversalTime().Subtract(check.searchDate).TotalMinutes;
-                if (minutes <= 5)
+                var cachedWeather = await cache.StringGetAsync(entity.Zipcode.ToString());
+                if (cachedWeather.HasValue)
                 {
-                    return check;
+                    var check = JsonConvert.DeserializeObject<WeatherModel>(cachedWeather);
+                    var minutes = DateTime.Now.ToUniversalTime().Subtract(check.searchDate).TotalMinutes;
+                    if (minutes <= 5)
+                    {
+                        return check;
+                    }
                 }
                 f = await (await http.GetAsync(@"http://api.openweathermap.org/data/2.5/forecast?zip=" +
                     entity.Zipcode + ",us&APPID=" + Properties.Settings.Default.OpenWeatherApiKey)).Content.ReadAsAsync<WeatherForecast>();
@@ -87,8 +93,8 @@ namespace WincChallenge.Respository
                     name = c.name,
                     searchDate = DateTime.Now.ToUniversalTime(),
                 };
-                
-              
+
+
                 await cache.StringSetAsync(entity.Zipcode.ToString(), JsonConvert.SerializeObject(w));
             }
             return w;
