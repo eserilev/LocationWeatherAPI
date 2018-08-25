@@ -12,7 +12,6 @@ namespace WincChallenge.Respository
         private static Lazy<ConnectionMultiplexer> lazyConnection = new Lazy<ConnectionMultiplexer>(() =>
         {
             string cacheConnection = ConfigurationManager.AppSettings["CacheConnection"].ToString();
-            
             return ConnectionMultiplexer.Connect(cacheConnection);
         });
 
