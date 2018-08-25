@@ -8,9 +8,8 @@ namespace WincChallenge.Respository
     public interface IRepository<T> where T: EntityBase
     {
         T GetById(Int32 id);
-        void Create(T entity);
+        void Create(ref T entity);
         void Delete(T entity);
-        void Update(T entity);
         
     }
 }

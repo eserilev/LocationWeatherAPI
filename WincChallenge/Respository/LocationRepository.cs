@@ -8,7 +8,7 @@ namespace WincChallenge.Respository
 {
     public class LocationRepository : IRepository<Location>
     {
-        public void Create(Location entity)
+        public void Create(ref Location entity)
         {
             throw new NotImplementedException();
         }
@@ -23,9 +23,6 @@ namespace WincChallenge.Respository
             throw new NotImplementedException();
         }
 
-        public void Update(Location entity)
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }
