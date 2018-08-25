@@ -6,20 +6,22 @@ using WincChallenge.Respository;
 
 namespace WincChallenge.Models
 {
-    public class WeatherModel : EntityBase
+    public class WeatherModel
     {
         public string name { get; set; }
         public WeatherRecord[] threeHourForecast { get; set; }
         public CurrentWeather currentWeather { get; set; }
+        public DateTime searchDate { get; set; }
+        public Int32 zipCode { get; set; }
     }
 
-    public class WeatherForecast: EntityBase
+    public class WeatherForecast
     {
         public string name { get; set; }
         public WeatherRecord[] list { get; set; }    
     }
 
-    public class CurrentWeather : EntityBase
+    public class CurrentWeather
     {
         public string name { get; set; }
         public TempInfo main { get; set; }

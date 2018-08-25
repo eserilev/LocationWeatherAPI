@@ -8,6 +8,8 @@ using SimpleInjector;
 using SimpleInjector.Lifestyles;
 using SimpleInjector.Integration.WebApi;
 using WincChallenge.Respository;
+using StackExchange.Redis;
+using System.Configuration;
 
 namespace WincChallenge
 {
@@ -18,11 +20,14 @@ namespace WincChallenge
             var container = new Container();
             container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
             container.Register<LocationRepository>(Lifestyle.Scoped);
+          
             container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
             container.Verify();
             GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            var c = CacheManager.Connection;
+
         }
     }
 }

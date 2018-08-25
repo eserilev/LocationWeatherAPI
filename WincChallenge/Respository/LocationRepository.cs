@@ -62,12 +62,18 @@ namespace WincChallenge.Respository
         {
             WeatherModel w;
             WeatherForecast f;
-            CurrentWeather c;   
-            using (var cacheConnection = CacheManager.Connection)
+            CurrentWeather c;
+            var cache = CacheManager.Connection.GetDatabase();
             using (var http = new HttpClient())
             {
 
-                 f = await (await http.GetAsync(@"http://api.openweathermap.org/data/2.5/forecast?zip=" +
+                var check = JsonConvert.DeserializeObject<WeatherModel>(await cache.StringGetAsync(entity.Zipcode.ToString()));
+                var minutes = DateTime.Now.ToUniversalTime().Subtract(check.searchDate).TotalMinutes;
+                if (minutes <= 5)
+                {
+                    return check;
+                }
+                f = await (await http.GetAsync(@"http://api.openweathermap.org/data/2.5/forecast?zip=" +
                     entity.Zipcode + ",us&APPID=" + Properties.Settings.Default.OpenWeatherApiKey)).Content.ReadAsAsync<WeatherForecast>();
 
                 c = await (await http.GetAsync(@"http://api.openweathermap.org/data/2.5/weather?zip=" +
@@ -75,14 +81,15 @@ namespace WincChallenge.Respository
 
                 w = new WeatherModel
                 {
+                    zipCode = entity.Zipcode,
                     currentWeather = c,
                     threeHourForecast = f.list,
                     name = c.name,
-                    Id = c.Id
+                    searchDate = DateTime.Now.ToUniversalTime(),
                 };
-                var cache = cacheConnection.GetDatabase();
-                JsonConvert.DeserializeObject<WeatherModel>(cache.StringGet(w.Id.ToString()));
-                cache.StringSet(w.Id.ToString(), JsonConvert.SerializeObject(w));
+                
+              
+                await cache.StringSetAsync(entity.Zipcode.ToString(), JsonConvert.SerializeObject(w));
             }
             return w;
         }

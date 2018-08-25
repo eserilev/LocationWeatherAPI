@@ -23,3 +23,5 @@ C:\Users\Eitan\source\repos\WincChallenge\WincChallenge\bin\EntityFramework.SqlS
 C:\Users\Eitan\source\repos\WincChallenge\WincChallenge\bin\EntityFramework.xml
 C:\Users\Eitan\source\repos\WincChallenge\WincChallenge\bin\EntityFramework.SqlServer.xml
 C:\Users\Eitan\source\repos\WincChallenge\WincChallenge\obj\Debug\WincChallenge.csprojResolveAssemblyReference.cache
+C:\Users\Eitan\source\repos\WincChallenge\WincChallenge\bin\StackExchange.Redis.dll
+C:\Users\Eitan\source\repos\WincChallenge\WincChallenge\bin\StackExchange.Redis.xml
