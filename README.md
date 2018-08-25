@@ -1,11 +1,14 @@
 # LocationWeatherAPI
 
 
-<b>Create Location:</b>
+<ul>Create Location:</ul>
 
-POST /api/location?Zipcode=90505&Name=My House&Country=United States of America&State=California&Id=6
+<b>POST</b> /api/location?Zipcode=90505&Name=My House&Country=United States of America&State=California&Id=6
 
-will throw exception if zipcode already exists in db (zipcode column has a unique constraint)
+<ul>
+  <li>
+will throw exception if zipcode already exists in db (zipcode column has a unique constraint)</li>
+</ul>
 
 Delete Location:
 DELETE /api/location?Zipcode=90505&Name=My House&Country=United States of America&State=California&Id=6
