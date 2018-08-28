@@ -26,9 +26,7 @@ namespace WincChallenge.Models
         public string name { get; set; }
         public TempInfo main { get; set; }
         public WeatherDescription[] weather { get; set; }
-
     }
-
 
     public class WeatherRecord
     {

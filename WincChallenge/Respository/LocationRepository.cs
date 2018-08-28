@@ -61,7 +61,7 @@ namespace WincChallenge.Respository
             }
         }
 
-        public async Task<WeatherModel> GetWeather(LocationModel entity)
+        public async Task<WeatherModel> GetWeather(Int32 Id)
         {
             WeatherModel w;
             WeatherForecast f;
@@ -69,7 +69,8 @@ namespace WincChallenge.Respository
             var cache = CacheManager.Connection.GetDatabase();
             using (var http = new HttpClient())
             {
-                var cachedWeather = await cache.StringGetAsync(entity.Zipcode.ToString());
+                var location = await GetById(Id);
+                var cachedWeather = await cache.StringGetAsync(location.Id.ToString());
                 if (cachedWeather.HasValue)
                 {
                     var check = JsonConvert.DeserializeObject<WeatherModel>(cachedWeather);
@@ -80,14 +81,14 @@ namespace WincChallenge.Respository
                     }
                 }
                 f = await (await http.GetAsync(@"http://api.openweathermap.org/data/2.5/forecast?zip=" +
-                    entity.Zipcode + ",us&APPID=" + Properties.Settings.Default.OpenWeatherApiKey)).Content.ReadAsAsync<WeatherForecast>();
+                    location.Zipcode + ",us&APPID=" + Properties.Settings.Default.OpenWeatherApiKey)).Content.ReadAsAsync<WeatherForecast>();
 
                 c = await (await http.GetAsync(@"http://api.openweathermap.org/data/2.5/weather?zip=" +
-                    entity.Zipcode + ",us&APPID=" + Properties.Settings.Default.OpenWeatherApiKey)).Content.ReadAsAsync<CurrentWeather>();
+                    location.Zipcode + ",us&APPID=" + Properties.Settings.Default.OpenWeatherApiKey)).Content.ReadAsAsync<CurrentWeather>();
 
                 w = new WeatherModel
                 {
-                    zipCode = entity.Zipcode,
+                    zipCode = location.Zipcode,
                     currentWeather = c,
                     threeHourForecast = f.list,
                     name = c.name,
@@ -95,7 +96,7 @@ namespace WincChallenge.Respository
                 };
 
 
-                await cache.StringSetAsync(entity.Zipcode.ToString(), JsonConvert.SerializeObject(w));
+                await cache.StringSetAsync(location.Id.ToString(), JsonConvert.SerializeObject(w));
             }
             return w;
         }
