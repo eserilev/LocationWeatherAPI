@@ -20,9 +20,11 @@ Get Location:
 
 <b>GET</b> /api/location?Id=6
 
-Get Weather:
+Get Weather: 
 
-<b>GET</b> /api/weather?Zipcode=90505&Name=My House&Country=United States of America&State=California&Id=6
+<b>GET</b> /api/location/id/weather
+
+Id is now unique identifier instead of zipcode. 
 
 <ul>
   <li>OpenWeather 3rd party api provides weather data</li>
@@ -35,6 +37,7 @@ Get Weather:
   <li>Endpoints are asynchronous</li>
   <li>Used Simple Injector library to help with dependancy injection</li>
   </ul>
+
 
 
 
